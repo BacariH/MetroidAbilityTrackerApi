@@ -8,7 +8,7 @@ namespace MetroidAbilityTrackerApi.Data
         public static void Seed(MetroidAbilityTrackerApiContext context)
         {
 
-            //Understand this class more
+            
             if (context.Trackers.Any() && context.Abilities.Any()) return; //DB has already been seeded
 
 

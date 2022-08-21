@@ -7,7 +7,7 @@ namespace MetroidAbilityTrackerApi.Data.Interfaces
         Task<ICollection<Tracker>> GetAllTrackersItems();
         Task<Tracker> GetSpecificTrackerItem(int id);
         Task<Tracker> CreateTrackerItem(Tracker item);
-        Task UpdateTrackerItem(Tracker trackerObj);
+        Task UpdateTrackerItem(int id,Tracker trackerObj);
         Task DeleteTrackerItem(int id);
 
     }

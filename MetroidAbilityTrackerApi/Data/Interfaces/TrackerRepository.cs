@@ -12,14 +12,28 @@ namespace MetroidAbilityTrackerApi.Data.Interfaces
             _ctx = ctx;
         }
 
-        public Task<Tracker> CreateTrackerItem(Tracker item)
+        public async Task<Tracker> CreateTrackerItem(Tracker item)
         {
-            throw new NotImplementedException();
+            
+            await _ctx.Trackers.AddAsync(item);
+            await _ctx.SaveChangesAsync();
+
+
+            return item;
+
         }
 
-        public Task DeleteTrackerItem(int id)
+        public async Task DeleteTrackerItem(int id)
         {
-            throw new NotImplementedException();
+            if (id == null) throw new Exception();
+
+            var itemToDelete = await _ctx.Trackers.SingleOrDefaultAsync(t => t.ID == id);
+
+             _ctx.Trackers.Remove(itemToDelete);
+
+            await _ctx.SaveChangesAsync();
+
+            return;
         }
 
         public async Task<ICollection<Tracker>> GetAllTrackersItems()
@@ -30,39 +44,56 @@ namespace MetroidAbilityTrackerApi.Data.Interfaces
                         .ToListAsync();
         }
 
-        public Task<Tracker> GetSpecificTrackerItem(int id)
+        public async Task<Tracker> GetSpecificTrackerItem(int id)
         {
-            throw new NotImplementedException();
+            //TODO
+            //Handle if there is a null value for id
+            
+           var trackedItem = await _ctx.Trackers
+                .Include(t => t.Game)
+                .Include(t => t.Abilities)
+                .FirstOrDefaultAsync(trackerId => trackerId.ID == id);
+
+            if(trackedItem == null) return null;
+
+            return trackedItem;
+            
         }
 
-        public async Task UpdateTrackerItem(Tracker trackerObj)
+        public async Task UpdateTrackerItem(int id, Tracker trackerObj)
         {
-           /* if (id != tracker.ID)
-            {
-                return BadRequest();
-            }
+            
+            
+            if(trackerObj == null) return;
 
+
+
+            if(id != trackerObj.ID)
+            {
+                return;
+            }
 
 
             try
             {
                 _ctx.Entry(trackerObj).State = EntityState.Modified;
-
                 await _ctx.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch(DbUpdateConcurrencyException)
             {
-                if (!TrackerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw new Exception();
             }
 
-            return NoContent();*/
+            return;
+            
+          
         }
+
+        //TODO:
+        //Create a tracker exist property for this repo
+        /*private bool TrackerExists(int id)
+        {
+            return _ctx.Trackers?.Any(e => e.ID == id).GetValueOrDefault();
+        }*/
     }
 }
