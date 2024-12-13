@@ -2,6 +2,15 @@
 {
     public static class Extentions
     {
+        //Make an extention that uses dependency injection to check for IRepositories
+
+
+        /*public static IServiceCollection AddServices(this IServiceCollection services)
+        {
+
+        }*/
+
+
         public static void CreateDbIfNotExists(this IHost host)
         {
             {

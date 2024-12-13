@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MetroidAbilityTrackerApiContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MetroidAbilityTrackerApiContext") ?? throw new InvalidOperationException("Connection string 'MetroidAbilityTrackerApiContext' not found.")));
 
+
 //Injecting our repository so it can be discoverable to our controller class
 builder.Services.AddScoped<ITrackerRepository, TrackerRepository>();
 // Add services to the container.

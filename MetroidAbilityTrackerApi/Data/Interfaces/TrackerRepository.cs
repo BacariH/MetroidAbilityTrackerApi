@@ -25,7 +25,7 @@ namespace MetroidAbilityTrackerApi.Data.Interfaces
 
         public async Task DeleteTrackerItem(int id)
         {
-            if (id == null) throw new Exception();
+            if (id == null) throw new Exception(); // need to log this return result
 
             var itemToDelete = await _ctx.Trackers.SingleOrDefaultAsync(t => t.ID == id);
 
